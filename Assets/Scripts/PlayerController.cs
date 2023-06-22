@@ -104,10 +104,12 @@ public class PlayerController : MonoBehaviour
                 Destroy(bloodPS, 3f);
                 var enemyController = hit.collider.GetComponent<EnemyController>();
                 enemyController.TakeDamage(1f);
+            }else{
+                var otherPS = Instantiate(otherObjectParticles, hit.point, Quaternion.identity);
+                otherPS.GetComponent<ParticleSystem>().Play();
+                Destroy(otherPS, 3f);
             }
-            var otherPS = Instantiate(otherObjectParticles, hit.point, Quaternion.identity);
-            otherPS.GetComponent<ParticleSystem>().Play();
-            Destroy(otherPS, 3f);
+            
             
             
         }

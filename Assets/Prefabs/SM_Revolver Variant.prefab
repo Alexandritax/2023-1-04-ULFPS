@@ -9,11 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5914052679613201946, guid: 6e8e54e195fe39041a15a44479dcac6d, type: 3}
       propertyPath: m_Name
-      value: SM_Revolver
+      value: SM_Revolver Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5914052679613201946, guid: 6e8e54e195fe39041a15a44479dcac6d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6438246683829265568, guid: 6e8e54e195fe39041a15a44479dcac6d, type: 3}
       propertyPath: m_RootOrder
