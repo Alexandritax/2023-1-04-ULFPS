@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float health;
     
+    public static PlayerController Instance { private set; get;}
+    public event EventHandler OnPlayerDamage;
 
     private Rigidbody mRb;
     private Vector2 mDirection;
@@ -28,6 +32,9 @@ public class PlayerController : MonoBehaviour
     private GameObject bloodObjectParticles;
     private GameObject otherObjectParticles;
 
+    private void Awake(){
+        Instance = this;
+    }
     private void Start()
     {
         mRb = GetComponent<Rigidbody>();
@@ -126,10 +133,11 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+        OnPlayerDamage?.Invoke(this, EventArgs.Empty);
         if (health <= 0f)
         {
             // Fin del juego
-            Debug.Log("Fin del juego");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 
@@ -138,7 +146,7 @@ public class PlayerController : MonoBehaviour
         if (col.CompareTag("Enemigo-Attack"))
         {
             Debug.Log("Player recibio danho");
-            TakeDamage(1f);
+            TakeDamage(10f);
         }
         
     }
