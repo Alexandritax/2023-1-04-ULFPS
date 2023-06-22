@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cff57d2400025749a97f0cb4b069738, type: 3}
   m_Name: Revolver
   m_EditorClassIdentifier: 
-  Damage: 2
+  Damage: 5
   shootDistance: 8
   GunSmoke: {fileID: 5623136790363622564, guid: 6a891b9f5b45e0e419c222cc3086bc22, type: 3}
   weaponPrefab: {fileID: 3597052090634493718, guid: 1acf0869058bef14eb9ad75509e43fb8, type: 3}

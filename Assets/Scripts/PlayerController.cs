@@ -9,8 +9,8 @@ public class PlayerController : MonoBehaviour
     private float speed;
     [SerializeField]
     private float turnSpeed;
-    [SerializeField]
-    private float shootDistance = 4f;
+    private float shootDistance;
+    private float damage;
     [SerializeField]
     private ParticleSystem shootPS;
     [SerializeField]
@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private Transform cameraMain;
     [SerializeField]
     private WeaponSwitch weaponSwitch;
+    private weapon weapon;
     private GameObject debugImpactSphere;
     private GameObject bloodObjectParticles;
     private GameObject otherObjectParticles;
@@ -31,11 +32,14 @@ public class PlayerController : MonoBehaviour
     {
         mRb = GetComponent<Rigidbody>();
         cameraMain = transform.Find("Main Camera");
+        weapon  = GameObject.Find("Weapons").transform.GetChild(0).GetComponent<weapon>();
+        
 
         debugImpactSphere = Resources.Load<GameObject>("DebugImpactSphere");
         bloodObjectParticles = Resources.Load<GameObject>("BloodSplat_FX Variant");
-        otherObjectParticles = Resources.Load<GameObject>("GunShot_Smoke_FX Variant");
-
+        otherObjectParticles = weapon.WeaponData.GunSmoke;
+        shootDistance = weapon.WeaponData.shootDistance;
+        damage = weapon.WeaponData.Damage;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -83,6 +87,10 @@ public class PlayerController : MonoBehaviour
             {
                 weaponSwitch.selectedWeapon++;
             }
+            weapon  = GameObject.Find("Weapons").transform.GetChild(weaponSwitch.selectedWeapon).GetComponent<weapon>();
+            otherObjectParticles = weapon.WeaponData.GunSmoke;
+            shootDistance = weapon.WeaponData.shootDistance;
+            damage = weapon.WeaponData.Damage;
         }
     }
 
@@ -103,7 +111,7 @@ public class PlayerController : MonoBehaviour
                 var bloodPS = Instantiate(bloodObjectParticles, hit.point, Quaternion.identity);
                 Destroy(bloodPS, 3f);
                 var enemyController = hit.collider.GetComponent<EnemyController>();
-                enemyController.TakeDamage(1f);
+                enemyController.TakeDamage(damage);
             }else{
                 var otherPS = Instantiate(otherObjectParticles, hit.point, Quaternion.identity);
                 otherPS.GetComponent<ParticleSystem>().Play();
