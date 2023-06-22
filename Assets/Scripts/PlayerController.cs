@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 mDirection;
     private Vector2 mDeltaLook;
     private Transform cameraMain;
+    [SerializeField]
+    private WeaponSwitch weaponSwitch;
     private GameObject debugImpactSphere;
     private GameObject bloodObjectParticles;
     private GameObject otherObjectParticles;
@@ -70,6 +72,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnChange(InputValue value){
+        if (value.isPressed)
+        {
+            if(weaponSwitch.selectedWeapon >= weaponSwitch.transform.childCount - 1)
+            {
+                weaponSwitch.selectedWeapon = 0;
+            }
+            else
+            {
+                weaponSwitch.selectedWeapon++;
+            }
+        }
+    }
+
     private void Shoot()
     {
         shootPS.Play();
@@ -88,12 +104,11 @@ public class PlayerController : MonoBehaviour
                 Destroy(bloodPS, 3f);
                 var enemyController = hit.collider.GetComponent<EnemyController>();
                 enemyController.TakeDamage(1f);
-            }else
-            {
-                var otherPS = Instantiate(otherObjectParticles, hit.point, Quaternion.identity);
-                otherPS.GetComponent<ParticleSystem>().Play();
-                Destroy(otherPS, 3f);
             }
+            var otherPS = Instantiate(otherObjectParticles, hit.point, Quaternion.identity);
+            otherPS.GetComponent<ParticleSystem>().Play();
+            Destroy(otherPS, 3f);
+            
             
         }
     }
