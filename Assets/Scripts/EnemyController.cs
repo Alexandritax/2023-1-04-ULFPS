@@ -140,6 +140,7 @@ public class EnemyController : MonoBehaviour
         Health -= damage;
         if (Health <= 0f)
         {
+            Spawner.Instance.EnemyKilled();
             Destroy(gameObject);
         }
     }
