@@ -40,7 +40,7 @@ public class Spawner : MonoBehaviour
         if(timer >= spawnTimer){
             SpawnEnemies(currentEnemyCount);
             if(spawnTimer > 10f){
-                spawnTimer -= 10f;
+                spawnTimer -= 5f;
             }
             timer = 0f;
         }
